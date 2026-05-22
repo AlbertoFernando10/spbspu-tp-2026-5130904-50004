@@ -220,3 +220,36 @@ alberto::operator>>(std::istream& in, DataStruct& ds)
   ds = std::move(tmp);
   return in;
 }
+std::ostream&
+alberto::operator<<(std::ostream& out, const DataStruct& ds)
+{
+  out << "(:key1 " << ds.key1 << "ll"
+      << ":key2 (:N " << ds.key2.first
+      << ":D " << ds.key2.second << ":)"
+      << ":key3 " << std::quoted(ds.key3) << ":)";
+  return out;
+}
+
+bool
+alberto::operator<(const DataStruct& a, const DataStruct& b)
+{
+  if (a.key1 != b.key1) {
+    return a.key1 < b.key1;
+  }
+  static constexpr double EPSILON = 1e-15;
+
+  const double ra = (a.key2.second != 0)
+      ? static_cast< double >(a.key2.first)
+        / static_cast< double >(a.key2.second)
+      : static_cast< double >(a.key2.first);
+  const double rb = (b.key2.second != 0)
+      ? static_cast< double >(b.key2.first)
+        / static_cast< double >(b.key2.second)
+      : static_cast< double >(b.key2.first);
+
+  if (std::abs(ra - rb) > EPSILON) {
+    return ra < rb;
+  }
+
+  return a.key3.size() < b.key3.size();
+}
