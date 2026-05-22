@@ -167,3 +167,56 @@ bool readField(std::istream& in,
 
 }
 }
+std::istream&
+alberto::operator>>(std::istream& in, DataStruct& ds)
+{
+  std::istream::sentry sentry(in);
+  if (!sentry) {
+    return in;
+  }
+
+  DataStruct tmp{};
+  bool       ok1 = false;
+  bool       ok2 = false;
+  bool       ok3 = false;
+
+  in >> alberto::ExpectChar{'('} >> alberto::ExpectChar{':'};
+  if (!in) {
+    return in;
+  }
+
+  for (int i = 0; i < 3; ++i) {
+    std::string name;
+    char        c = '\0';
+    while (in.get(c) && c != ' ') {
+      name += c;
+    }
+    if (!in) {
+      in.setstate(std::ios::failbit);
+      return in;
+    }
+
+    if (!detail::readField(in, name, tmp.key1, tmp.key2, tmp.key3, ok1, ok2, ok3)) {
+      in.setstate(std::ios::failbit);
+      return in;
+    }
+
+    in >> alberto::ExpectChar{':'};
+    if (!in) {
+      return in;
+    }
+  }
+
+  in >> alberto::ExpectChar{')'};
+  if (!in) {
+    return in;
+  }
+
+  if (!ok1 || !ok2 || !ok3) {
+    in.setstate(std::ios::failbit);
+    return in;
+  }
+
+  ds = std::move(tmp);
+  return in;
+}
