@@ -59,3 +59,111 @@ bool parseSignedLongLit(const std::string& token, long long& value)
   }
   return true;
 }
+bool readRational(std::istream& in,
+                  std::pair< long long, unsigned long long >& value)
+{
+  in >> alberto::ExpectChar{'('};
+  if (!in) {
+    return false;
+  }
+
+  long long          numerator   = 0;
+  unsigned long long denominator = 0;
+  bool               gotN        = false;
+  bool               gotD        = false;
+
+  for (int i = 0; i < 2; ++i) {
+    in >> alberto::ExpectChar{':'};
+    if (!in) {
+      return false;
+    }
+
+    std::string fieldName;
+    char        c = '\0';
+    while (in.get(c) && c != ' ') {
+      fieldName += c;
+    }
+    if (!in) {
+      return false;
+    }
+
+    std::string tok;
+    if (!readToken(in, tok)) {
+      return false;
+    }
+
+    if (fieldName == "N") {
+      try {
+        numerator = std::stoll(tok);
+        gotN      = true;
+      } catch (...) {
+        return false;
+      }
+    } else if (fieldName == "D") {
+      try {
+        denominator = std::stoull(tok);
+        gotD        = true;
+      } catch (...) {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  in >> alberto::ExpectChar{':'} >> alberto::ExpectChar{')'};
+  if (!in || !gotN || !gotD) {
+    return false;
+  }
+
+  value = {numerator, denominator};
+  return true;
+}
+
+bool readField(std::istream& in,
+               const std::string& name,
+               long long& key1,
+               std::pair< long long, unsigned long long >& key2,
+               std::string& key3,
+               bool& ok1,
+               bool& ok2,
+               bool& ok3)
+{
+  if (name == "key1") {
+    if (ok1) {
+      return false;
+    }
+    std::string tok;
+    if (!readToken(in, tok)) {
+      return false;
+    }
+    if (!parseSignedLongLit(tok, key1)) {
+      return false;
+    }
+    ok1 = true;
+
+  } else if (name == "key2") {
+    if (ok2) {
+      return false;
+    }
+    if (!readRational(in, key2)) {
+      return false;
+    }
+    ok2 = true;
+
+  } else if (name == "key3") {
+    if (ok3) {
+      return false;
+    }
+    if (!(in >> std::quoted(key3))) {
+      return false;
+    }
+    ok3 = true;
+
+  } else {
+    return false;
+  }
+  return true;
+}
+
+}
+}
