@@ -1,6 +1,5 @@
-#ifndef RECTANGLE_HPP
-#define RECTANGLE_HPP
-
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
 #include "shape.hpp"
 
 namespace alberto {

@@ -1,6 +1,5 @@
-#ifndef SQUARE_HPP
-#define SQUARE_HPP
-
+#ifndef SQUARE_H
+#define SQUARE_H
 #include "shape.hpp"
 
 namespace alberto {

@@ -1,4 +1,4 @@
-#include "xquare.hpp"
+#include "xquare.h"
 #include <stdexcept>
 
 namespace alberto {

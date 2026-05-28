@@ -1,6 +1,5 @@
-#ifndef XQUARE_HPP
-#define XQUARE_HPP
-
+#ifndef XQUARE_H
+#define XQUARE_H
 #include "shape.hpp"
 
 namespace alberto {

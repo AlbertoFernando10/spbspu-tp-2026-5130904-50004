@@ -1,6 +1,5 @@
-#ifndef SHAPE_HPP
-#define SHAPE_HPP
-
+#ifndef SHAPE_H
+#define SHAPE_H
 #include "base-types.hpp"
 
 namespace alberto {

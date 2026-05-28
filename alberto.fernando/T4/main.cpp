@@ -3,11 +3,11 @@
 #include <memory>
 #include <stdexcept>
 
-#include "base-types.hpp"
-#include "shape.hpp"
-#include "rectangle.hpp"
-#include "square.hpp"
-#include "xquare.hpp"
+#include "base-types.h"
+#include "shape.h"
+#include "rectangle.h"
+#include "square.h"
+#include "xquare.h"
 
 namespace alberto {
 
