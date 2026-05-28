@@ -11,17 +11,20 @@
 
 namespace alberto {
 
-bool scaleRelativeTo(const std::vector<std::shared_ptr<alberto::Shape>>& shapes)
+int scaleRelativeTo(const std::vector<std::shared_ptr<alberto::Shape>>& shapes)
 {
   std::cout << "Enter scaling point and factor (px py factor): ";
   double px = 0.0, py = 0.0, factor = 0.0;
   if (!(std::cin >> px >> py >> factor)) {
+    if (std::cin.eof()) {
+      return 2;
+    }
     std::cerr << "Error: invalid input\n";
-    return false;
+    return 1;
   }
   if (factor <= 0.0) {
     std::cerr << "Error: scaling factor must be positive, got " << factor << "\n";
-    return false;
+    return 1;
   }
   point_t p = { px, py };
   for (const auto& shape : shapes) {
@@ -32,7 +35,7 @@ bool scaleRelativeTo(const std::vector<std::shared_ptr<alberto::Shape>>& shapes)
     shape->scale(factor);
   }
   std::cout << "\n=== After scaling (point=(" << px << "," << py << ") factor=" << factor << ") ===\n";
-  return true;
+  return 0;
 }
 
 void printShapeInfo(const std::shared_ptr<Shape>& s, const std::string& name)
@@ -67,6 +70,7 @@ rectangle_t overallFrame(const std::vector<std::shared_ptr<Shape>>& shapes)
   point_t c = { (minX + maxX) / 2.0, (minY + maxY) / 2.0 };
   return { w, h, c };
 }
+
 void printSummary(const std::vector<std::shared_ptr<Shape>>& shapes,
                   const std::vector<std::string>& names)
 {
@@ -102,10 +106,13 @@ int main()
   std::cout << "\n=== Before scaling ===\n";
   printSummary(shapes, names);
 
-  if (!scaleRelativeTo(shapes)) {
+  int result = scaleRelativeTo(shapes);
+  if (result == 1) {
     return 1;
   }
-  printSummary(shapes, names);
+  if (result == 0) {
+    printSummary(shapes, names);
+  }
 
   return 0;
 }
