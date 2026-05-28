@@ -1,6 +1,6 @@
 #ifndef SQUARE_H
 #define SQUARE_H
-#include "shape.hpp"
+#include "shape.h"
 
 namespace alberto {
 class Square : public Shape {

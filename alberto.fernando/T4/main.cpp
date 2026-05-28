@@ -3,7 +3,7 @@
 #include <memory>
 #include <stdexcept>
 
-#include "base-types.h"
+#include "basetypes.h"
 #include "shape.h"
 #include "rectangle.h"
 #include "square.h"

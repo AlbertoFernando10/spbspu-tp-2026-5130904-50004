@@ -1,6 +1,6 @@
 #ifndef XQUARE_H
 #define XQUARE_H
-#include "shape.hpp"
+#include "shape.h"
 
 namespace alberto {
 
