@@ -1,4 +1,4 @@
-#include "datastruct.hpp"
+#include "Datastruct.hpp"
 
 #include <cctype>
 #include <cmath>
@@ -59,6 +59,7 @@ bool parseSignedLongLit(const std::string& token, long long& value)
   }
   return true;
 }
+
 bool readRational(std::istream& in,
                   std::pair< long long, unsigned long long >& value)
 {
@@ -167,6 +168,7 @@ bool readField(std::istream& in,
 
 }
 }
+
 std::istream&
 alberto::operator>>(std::istream& in, DataStruct& ds)
 {
@@ -220,6 +222,7 @@ alberto::operator>>(std::istream& in, DataStruct& ds)
   ds = std::move(tmp);
   return in;
 }
+
 std::ostream&
 alberto::operator<<(std::ostream& out, const DataStruct& ds)
 {
