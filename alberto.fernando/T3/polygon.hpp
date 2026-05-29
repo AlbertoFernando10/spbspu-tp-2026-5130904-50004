@@ -13,3 +13,13 @@ struct Point
   int x = 0;
   int y = 0;
 };
+
+struct Polygon
+{
+  std::vector< Point > points;
+};
+
+std::istream& operator>>(std::istream& in, Point& p);
+std::istream& operator>>(std::istream& in, Polygon& poly);
+std::ostream& operator<<(std::ostream& out, const Point& p);
+std::ostream& operator<<(std::ostream& out, const Polygon& poly);
